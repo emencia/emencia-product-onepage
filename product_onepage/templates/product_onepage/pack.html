@@ -1,4 +1,4 @@
-{% load product_tags i18n %}{% get_current_language as LANGUAGE_CODE %}
+{% load onepage_tags i18n %}{% get_current_language as LANGUAGE_CODE %}
 <div class="bgBlack">
     <div class="row flexible row-spacer row-larger">
         <div class="columns large-7 large-offset-1 choices-block halo chooseContain">
@@ -24,15 +24,14 @@
             {% if pack.shop_availability %}
                 <div class="small-12 vertSpace" style="float:left">
                     <a class="medium button go" href="{{ pack.shop_url }}">
-                        I want it
-                        <em class="icon-typo"></em>
+                        I want it <em class="icon-typo"></em>
                     </a>
                 </div>
             {% endif %}
             
             {% if pack.news_availability %}
                 <div class="inform">
-                    <h4 class="hide-for-xlarge-up " style="text-align:left"></h4>
+                    <h4 class="hide-for-xlarge-up" style="text-align:left"></h4>
                     <form id="nlwantit" class="form formAjax" data-abide="ajax" action="/subscribe/{{ LANGUAGE_CODE }}/{{ pack.news_slug }}" method="post" novalidate="novalidate">
                         <div class="small-12 medium-8 large-7 columns unpadded email-field">
                             <input id="id_email_bebop3" class="buttonField idleField mailSub" type="email" required="" placeholder="email address" maxlength="75" name="email" data-invalid=""></input>

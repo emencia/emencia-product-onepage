@@ -7,14 +7,18 @@ from django.utils.translation import ugettext_lazy as _
 from paintstore.fields import ColorPickerField
 
 
-# Abstract Models
 class AbstractCMS(CMSPlugin):
+    """
+    Abstracted base model for all plugins
+    """
     title = models.CharField(_(u'Title'), max_length=200)
     htmlid = models.CharField(_(u'Html ID'), max_length=200)
 
     def get_admin_url(self):
         return urlresolvers.reverse("admin:%s_%s_change" % (
-            self._meta.app_label, self._meta.module_name), args=(self.id,))
+            self._meta.app_label, self._meta.module_name),
+            args=(self.id,)
+        )
 
     def modify(self):
         return '<a href="%s">Click here to modify</a>' % (self.get_admin_url())
@@ -25,11 +29,16 @@ class AbstractCMS(CMSPlugin):
 
 
 class AbstractChildModel(models.Model):
+    """
+    Abstracted base model for model used as a relation in plugins
+    """
     admin_name = models.CharField(_(u'Admin Name'), max_length=200)
 
     def get_admin_url(self):
         return urlresolvers.reverse("admin:%s_%s_change" % (
-            self._meta.app_label, self._meta.module_name), args=(self.id,))
+            self._meta.app_label, self._meta.module_name),
+            args=(self.id,)
+        )
 
     def modify(self):
         return '<a href="%s">Click here to modify</a>' % (self.get_admin_url())
@@ -39,8 +48,8 @@ class AbstractChildModel(models.Model):
         abstract = True
 
 
-# Blurb Plugin
 class Blurb(AbstractCMS):
+    """Blurb Plugin"""
     ALIGNMENT_CHOICES = (
         ('1', _(u'Extreme Left')),
         ('3', _(u'Left')),
@@ -48,24 +57,20 @@ class Blurb(AbstractCMS):
         ('6', _(u'Right')),
         ('8', _(u'Extreme Right')),
     )
-    background = models.ImageField(_(u'Background'),
-                                   upload_to='parrot_product/gallery')
-    mobile = models.ImageField(_(u'Mobile'),
-                               upload_to='parrot_product/gallery', blank=True)
-    logo = models.ImageField(_(u'Logo'),
-                             upload_to='parrot_product/gallery', blank=True)
+    background = models.ImageField(_(u'Background'), upload_to='product_onepage')
+    mobile = models.ImageField(_(u'Mobile'), upload_to='product_onepage', blank=True)
+    logo = models.ImageField(_(u'Logo'), upload_to='product_onepage', blank=True)
     description = HTMLField(_(u'Text'))
     button = models.CharField(_(u'Button'), max_length=200, blank=True)
     url = models.URLField(_(u'URL'), max_length=200, blank=True)
-    alignment = models.CharField(_(u'Text Alignment'), max_length=20,
-                                 choices=ALIGNMENT_CHOICES, default='centered')
+    alignment = models.CharField(_(u'Text Alignment'), max_length=20, choices=ALIGNMENT_CHOICES, default='centered')
 
     def __unicode__(self):
         return 'Blurb %s' % (self.title)
 
 
-# Overview Plugin
 class Overview(AbstractCMS):
+    """Overview Plugin"""
     badges = models.ManyToManyField('OverviewBadge', verbose_name=_(u'badges'))
 
     def copy_relations(self, oldinstance):
@@ -76,8 +81,8 @@ class Overview(AbstractCMS):
 
 
 class OverviewBadge(AbstractChildModel):
-    image = models.ImageField(_(u'Image'),
-                              upload_to='parrot_product/gallery')
+    """Badge for Overviews"""
+    image = models.ImageField(_(u'Image'), upload_to='product_onepage')
     text = HTMLField(_(u'Text'))
     weighting = models.IntegerField(_(u'Weighting'), max_length=10, default=0)
 
@@ -85,12 +90,10 @@ class OverviewBadge(AbstractChildModel):
         return '%s' % (self.admin_name)
 
 
-# Packaging Plugin
-
 class AbstractPackaging(AbstractCMS):
-    colors = models.ManyToManyField('PackagingColor',
-                                    verbose_name=_(u'colors'))
-    logo = models.ImageField(_(u'Logo'), upload_to='parrot_product/gallery')
+    """Abstracted Packaging Plugin"""
+    colors = models.ManyToManyField('PackagingColor', verbose_name=_(u'colors'))
+    logo = models.ImageField(_(u'Logo'), upload_to='product_onepage')
     description = HTMLField(_(u'Description'))
     shop_url = models.URLField(_(u'Shop URL'), max_length=200, blank=True)
     shop_availability = models.BooleanField(_(u'Has shop'))
@@ -105,53 +108,46 @@ class AbstractPackaging(AbstractCMS):
     class Meta:
         abstract = True
 
-
+# Packaging plugin fields is conditionnated to the mcrm app
 try:
     from project.mcrm.models import Category
 except ImportError:
     class Packaging(AbstractPackaging):
-        news_slug = models.CharField(
-            _(u'News Slug'), max_length=50, blank=True)
+        news_slug = models.CharField(_(u'News Slug'), max_length=50, blank=True)
 else:
     class Packaging(AbstractPackaging):
         news_slug = models.ForeignKey(Category, blank=True)
 
 
 class PackagingColor(AbstractChildModel):
-    package = models.ImageField(_(u'Package'),
-                                upload_to='parrot_product/gallery')
+    """Color for Packaging plugins"""
+    package = models.ImageField(_(u'Package'), upload_to='product_onepage')
     hexa = ColorPickerField(_(u'Hexa'), blank=True)
-    icon = models.ImageField(_(u'Icon'),
-                             upload_to='parrot_product/gallery', blank=True)
+    icon = models.ImageField(_(u'Icon'), upload_to='product_onepage', blank=True)
     weighting = models.IntegerField(_(u'Weighting'), max_length=10, default=0)
 
     def __unicode__(self):
         return '%s' % (self.admin_name)
 
 
-# Spec Plugin
 class Spec(AbstractCMS):
+    """Specification Plugin"""
     ALIGNMENT_CHOICES = (
         ('left', _(u'Left')),
         ('right', _(u'Right')),
     )
-    alignment = models.CharField(_(u'Text Alignment'), max_length=20,
-                                 choices=ALIGNMENT_CHOICES, default='left')
-    image = models.ImageField(_(u'Image'),
-                              upload_to='parrot_product/gallery', blank=True)
+    alignment = models.CharField(_(u'Text Alignment'), max_length=20, choices=ALIGNMENT_CHOICES, default='left')
+    image = models.ImageField(_(u'Image'), upload_to='product_onepage', blank=True)
     description = HTMLField(_(u'Text'), blank=True)
 
     def __unicode__(self):
         return 'Spec %s' % (self.title)
 
 
-# Tab Plugin
 class Tab(AbstractCMS):
-    background = models.ImageField(_(u'background'),
-                                   upload_to='parrot_product/gallery',
-                                   blank=True)
-    icons = models.ManyToManyField('TabIcon',
-                                   verbose_name=_(u'icons'))
+    """Abstracted Tab Plugin"""
+    background = models.ImageField(_(u'background'), upload_to='product_onepage', blank=True)
+    icons = models.ManyToManyField('TabIcon', verbose_name=_(u'icons'))
 
     def copy_relations(self, oldinstance):
         self.icons = oldinstance.icons.all()
@@ -161,28 +157,22 @@ class Tab(AbstractCMS):
 
 
 class TabIcon(AbstractChildModel):
+    """Icon for tab plugin"""
     title = models.CharField(_(u'Title'), max_length=200)
     text = HTMLField(_(u'Text'), blank=True)
-    background = models.ImageField(_(u'background'),
-                                   upload_to='parrot_product/gallery',
-                                   blank=True)
-    passive_image = models.ImageField(_(u'Passive Image'),
-                                      upload_to='parrot_product/gallery')
-    active_image = models.ImageField(_(u'Active Image'),
-                                     upload_to='parrot_product/gallery',
-                                     blank=True)
+    background = models.ImageField(_(u'background'), upload_to='product_onepage', blank=True)
+    passive_image = models.ImageField(_(u'Passive Image'), upload_to='product_onepage')
+    active_image = models.ImageField(_(u'Active Image'), upload_to='product_onepage', blank=True)
     weighting = models.IntegerField(_(u'Weighting'), max_length=10, default=0)
 
     def __unicode__(self):
         return '%s' % (self.admin_name)
 
 
-# VideoGroup Plugin
 class VideoGroup(AbstractCMS):
-    files = models.ManyToManyField('VideoGroupFile',
-                                   verbose_name=_(u'files'))
-    background = models.ImageField(_(u'Background'),
-                                   upload_to='parrot_product/gallery')
+    """Abstracted VideoGroup Plugin"""
+    files = models.ManyToManyField('VideoGroupFile', verbose_name=_(u'files'))
+    background = models.ImageField(_(u'Background'), upload_to='product_onepage')
 
     def copy_relations(self, oldinstance):
         self.files = oldinstance.files.all()
@@ -190,36 +180,31 @@ class VideoGroup(AbstractCMS):
     def __unicode__(self):
         return 'VideoGroup %s' % (self.title)
 
-
 class VideoGroupFile(AbstractChildModel):
+    """VideoGroup plugin"""
     title = models.CharField(_(u'Title'), max_length=200)
     url = models.URLField(_(u'URL'), max_length=200)
-    image = models.ImageField(_(u'Image'),
-                              upload_to='parrot_product/gallery', blank=True)
+    image = models.ImageField(_(u'Image'), upload_to='product_onepage', blank=True)
     weighting = models.IntegerField(_(u'Weighting'), max_length=10, default=0)
 
     def __unicode__(self):
         return '%s' % (self.admin_name)
 
 
-# TwentyTwenty Plugin
 class TwentyTwenty(AbstractCMS):
-    left_legend = models.CharField(_(u'Left Legend'),
-                                   max_length=200, blank=True)
-    left_image = models.ImageField(_(u'Left Image'),
-                                   upload_to='parrot_product/gallery')
-    right_legend = models.CharField(_(u'Right Legend'),
-                                    max_length=200, blank=True)
-    right_image = models.ImageField(_(u'Right Image'),
-                                    upload_to='parrot_product/gallery')
+    """TwentyTwenty Plugin"""
+    left_legend = models.CharField(_(u'Left Legend'), max_length=200, blank=True)
+    left_image = models.ImageField(_(u'Left Image'), upload_to='product_onepage')
+    right_legend = models.CharField(_(u'Right Legend'), max_length=200, blank=True)
+    right_image = models.ImageField(_(u'Right Image'), upload_to='product_onepage')
     description = HTMLField(_(u'Text'))
 
     def __unicode__(self):
         return 'TwentyTwenty %s' % (self.title)
 
 
-# Subscribe Plugin
 class AbstractSubscribe(AbstractCMS):
+    """Abstracted Subscribe Plugin"""
     message = HTMLField(_(u'Text'))
 
     def __unicode__(self):
@@ -228,13 +213,12 @@ class AbstractSubscribe(AbstractCMS):
     class Meta:
         abstract = True
 
-
+# Subscribe plugin fields is conditionnated to the mcrm app
 try:
     from project.mcrm.models import Category
 except ImportError:
     class Subscribe(AbstractSubscribe):
-        subscribe_to = models.CharField(
-            _(u'Subscribe to'), max_length=50, blank=True)
+        subscribe_to = models.CharField(_(u'Subscribe to'), max_length=50, blank=True)
 else:
     class Subscribe(AbstractSubscribe):
         subscribe_to = models.ForeignKey(Category, blank=True)

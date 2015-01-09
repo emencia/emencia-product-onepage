@@ -18,7 +18,7 @@ class TabPlugin(CMSPluginBase):
     model = Tab
     module = "Product"
     name = _(u'Product Tab')
-    render_template = "parrot_product/tab.html"
+    render_template = "product_onepage/tab.html"
     raw_id_fields = ('icons',)
 
     def render(self, context, instance, placeholder):
@@ -30,7 +30,7 @@ class SpecPlugin(CMSPluginBase):
     model = Spec
     module = "Product"
     name = _(u'Product Spec')
-    render_template = "parrot_product/spec.html"
+    render_template = "product_onepage/spec.html"
 
     def render(self, context, instance, placeholder):
         context['spec'] = instance
@@ -41,7 +41,7 @@ class BlurbPlugin(CMSPluginBase):
     model = Blurb
     module = "Product"
     name = _(u'Product Blurb')
-    render_template = "parrot_product/blurb.html"
+    render_template = "product_onepage/blurb.html"
 
     def render(self, context, instance, placeholder):
         context['blurb'] = instance
@@ -52,7 +52,7 @@ class OverviewPlugin(CMSPluginBase):
     model = Overview
     module = "Product"
     name = _(u'Product Overview')
-    render_template = "parrot_product/overview.html"
+    render_template = "product_onepage/overview.html"
     raw_id_fields = ('badges',)
 
     def render(self, context, instance, placeholder):
@@ -64,7 +64,7 @@ class PackagingPlugin(CMSPluginBase):
     model = Packaging
     module = "Product"
     name = _(u'Product Packaging')
-    render_template = "parrot_product/pack.html"
+    render_template = "product_onepage/pack.html"
     raw_id_fields = ('colors',)
 
     def render(self, context, instance, placeholder):
@@ -76,7 +76,7 @@ class SubscribePlugin(CMSPluginBase):
     model = Subscribe
     module = "Product"
     name = _(u'Product Subscribe')
-    render_template = "parrot_product/subscribe.html"
+    render_template = "product_onepage/subscribe.html"
 
     def render(self, context, instance, placeholder):
         context['subscribe'] = instance
@@ -87,7 +87,7 @@ class VideoGroupPlugin(CMSPluginBase):
     model = VideoGroup
     module = "Product"
     name = _(u'Product Video Group')
-    render_template = "parrot_product/video.html"
+    render_template = "product_onepage/video.html"
     raw_id_fields = ('files',)
 
     def render(self, context, instance, placeholder):
@@ -99,7 +99,7 @@ class TwentyTwentyPlugin(CMSPluginBase):
     model = TwentyTwenty
     module = "Product"
     name = _(u'Product Twenty Twenty')
-    render_template = "parrot_product/twentytwenty.html"
+    render_template = "product_onepage/twentytwenty.html"
 
     def render(self, context, instance, placeholder):
         context['twenty'] = instance

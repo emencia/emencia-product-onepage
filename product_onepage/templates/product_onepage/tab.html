@@ -1,12 +1,13 @@
-{% load product_tags i18n %}{% get_current_language as LANGUAGE_CODE %}
+{% load onepage_tags i18n %}{% get_current_language as LANGUAGE_CODE %}
 
 {% with tab.icons.all|length as size %}
 <div>
     <div class="row row-fluid bgImg bigcontent relatif">
-        <div class="columns small-offset-1 small-10 large-offset-0  large-12  tabImgContainer unpadded">
+        <div class="columns small-offset-1 small-10 large-offset-0 large-12 tabImgContainer unpadded">
+        
             <dl class="tabs hide-for-me-down row flexible stretch vw60" data-tab>
                 {% for icon in tab.icons.all|dictsort:'weighting' %}
-                    <dd class="columns large-{{ 12|divide:size }} marge1 {% if forloop.counter == 1 %} active {% endif %}">
+                    <dd class="columns large-{{ 12|divide:size }} marge1{% if forloop.counter == 1 %} active{% endif %}">
                         <a href="#panel-{{ tab.htmlid }}-{{ forloop.counter }}">
                             <span class="ico">
                                 <img src="/media/{{ icon.passive_image }}"> <br><br>
@@ -16,6 +17,7 @@
                     </dd>
                 {% endfor %}
             </dl>
+            
             <div class="tabs-content">
                 {% for icon in tab.icons.all|dictsort:'weighting' %}
                     <div id="panel-{{ tab.htmlid }}-{{ forloop.counter }}" class="content {% if forloop.counter == 1 %} active {% endif %} ">
@@ -30,6 +32,7 @@
                     </div>
                 {% endfor %}
             </div>
+            
         </div>
     </div>
 </div>

@@ -1,6 +1,7 @@
 <div class="vertSpaceX2">
     <div class="row row-larger flexible">
         <div class="columns small-12 large-5 large-offset-1 relatif">
+        
             {% if twenty.left_legend and twenty.right_legend %}
                 <div class="row">
                     <div class="columns small-6">
@@ -11,12 +12,14 @@
                     </div>
                 </div>
             {% endif %}
-            <div id="{{ twenty.htmlid }}" class='twentytwenty-container'>
+            
+            <div id="{{ twenty.htmlid }}" class="twentytwenty-container">
                 <img src="/media/{{ twenty.left_image }}">
                 <img src="/media/{{ twenty.right_image }}">
             </div>
-        </div>  
-        <div class="columns large-4 large-offset-1 ">
+            
+        </div>
+        <div class="columns large-4 large-offset-1">
             {{ twenty.description|safe }}
         </div>
     </div>

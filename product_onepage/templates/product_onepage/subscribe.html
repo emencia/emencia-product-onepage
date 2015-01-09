@@ -2,24 +2,26 @@
 
 <div class="inform bgBlack">
     <div class="row row-spacer">
+    
         <div class="columns medium-5 bgIcone mail">
             {{ subscribe.message|safe }}
         </div>
+        
         <div class="columns medium-7">
             <div class="row collapse">
                 <form id="{{ subscribe.htmlid }}" method="post" action="/subscribe/{{ LANGUAGE_CODE }}/{{ subscribe.subscribe_to.slug }}" class="form formAjax" data-abide novalidate="novalidate">
                     <div class="small-10 large-7 columns unpadded email-field">
                         <input id="id_email_Zik2" type="email" name="email" maxlength="75" placeholder="email address" class="buttonField idleField mailSub" required="">
                         <small class="error">A valid email address is required.</small>
-                        </div>
-                        <div class="small-2 large-5 columns unpadded perspective">
+                    </div>
+                    <div class="small-2 large-5 columns unpadded perspective">
                         <a class="medium button go btn-8 btn-8g ajaxSub" data-mysite="http://example.com">
-                            <span class="front">
-                            <span class=" label hide-for-medium-down">Keep me posted </span><em class="icon-typo">&gt;</em></span>
+                            <span class="front"><span class=" label hide-for-medium-down">Keep me posted </span><em class="icon-typo">&gt;</em></span>
                         </a>
                     </div>
                 </form>
             </div>
         </div>
+        
     </div>
 </div>
