@@ -1,0 +1,27 @@
+{% load product_tags %}
+<div id="{{ blurb.htmlid }}" class="row row-fluid bgImg relatif">
+    <img class="bg" src="/media/{{ blurb.background }}">
+    
+    <div class="columns small-12 relatif">
+    
+        <div class="row  flexible">
+            <div class="columns large-3 {% if blurb.alignment == 'centered' %} large-centered {% else %} large-offset-{{ blurb.alignment }} {% endif %}">
+                <div class="row">
+                    {% if blurb.logo %}
+                        <div class="small-12 columns">
+                            <img class="centered resp-ico" src="/media/{{ blurb.logo }}">
+                        </div>
+                    {% endif %}
+                    <div class="small-12 columns">
+                        {{ blurb.description|safe }}
+                        {% if blurb.url %}
+                            <a href="{{ blurb.url }}" class="button">{{ blurb.button }}</a>
+                        {% endif %}
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>

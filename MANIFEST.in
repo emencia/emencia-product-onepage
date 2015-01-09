@@ -1,0 +1,6 @@
+include MANIFEST.in
+include LICENCE.txt
+include README.rst
+recursive-include product_onepage/templates *
+recursive-include product_onepage/locale *
+recursive-include product_onepage/static *

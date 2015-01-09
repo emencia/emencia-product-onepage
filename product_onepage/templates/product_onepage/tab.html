@@ -1,0 +1,36 @@
+{% load product_tags i18n %}{% get_current_language as LANGUAGE_CODE %}
+
+{% with tab.icons.all|length as size %}
+<div>
+    <div class="row row-fluid bgImg bigcontent relatif">
+        <div class="columns small-offset-1 small-10 large-offset-0  large-12  tabImgContainer unpadded">
+            <dl class="tabs hide-for-me-down row flexible stretch vw60" data-tab>
+                {% for icon in tab.icons.all|dictsort:'weighting' %}
+                    <dd class="columns large-{{ 12|divide:size }} marge1 {% if forloop.counter == 1 %} active {% endif %}">
+                        <a href="#panel-{{ tab.htmlid }}-{{ forloop.counter }}">
+                            <span class="ico">
+                                <img src="/media/{{ icon.passive_image }}"> <br><br>
+                                {{ icon.title }}
+                            </span>
+                        </a>
+                    </dd>
+                {% endfor %}
+            </dl>
+            <div class="tabs-content">
+                {% for icon in tab.icons.all|dictsort:'weighting' %}
+                    <div id="panel-{{ tab.htmlid }}-{{ forloop.counter }}" class="content {% if forloop.counter == 1 %} active {% endif %} ">
+                        <img class="bg" src="/media/{% if icon.background %}{{ icon.background }}{% else %}{{ tab.background }}{% endif %}">
+                        <div class="innercontent" style="top: 5vw;">
+                            <div class="row">
+                                <div class="columns small-12 medium-10 large-6 left">
+                                    {{ icon.text|safe }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endwith %}

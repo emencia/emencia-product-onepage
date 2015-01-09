@@ -1,0 +1,57 @@
+{% load product_tags i18n %}{% get_current_language as LANGUAGE_CODE %}
+<div class="bgBlack">
+    <div class="row flexible row-spacer row-larger">
+        <div class="columns large-7 large-offset-1 choices-block halo chooseContain">
+            {% for color in pack.colors.all|dictsort:'weighting' %}
+                <img class="choosen-item pack-{{ pack.htmlid }}-{{ forloop.counter }}" src="/media/{{ color.package }}"  {% if forloop.counter == 1 %} style="display:inline-block;" {% endif %}>
+            {% endfor %}
+            <ul class="choices inline-list">
+            {% for color in pack.colors.all|dictsort:'weighting' %}
+                <li class="choice-item {% if color.hexa %} bullet {% endif %} {% if forloop.counter == 1 %} selected {% endif %}" data-showit="pack-{{ pack.htmlid }}-{{ forloop.counter }}" {% if color.hexa %} style="background-color: {{ color.hexa }}" {% endif %}>
+                    {% if color.icon %}
+                        <img src="/media/{{ color.icon }}">
+                    {% endif %}
+                </li>
+            {% endfor %}
+            </ul>
+        </div>
+        <div class="columns large-4 whiteText">
+            <div class="text-center">
+                <img src="/media/{{ pack.logo }}">
+            </div>
+            {{ pack.description|safe }}
+
+            {% if pack.shop_availability %}
+                <div class="small-12 vertSpace" style="float:left">
+                    <a class="medium button go" href="{{ pack.shop_url }}">
+                        I want it
+                        <em class="icon-typo"></em>
+                    </a>
+                </div>
+            {% endif %}
+            
+            {% if pack.news_availability %}
+                <div class="inform">
+                    <h4 class="hide-for-xlarge-up " style="text-align:left"></h4>
+                    <form id="nlwantit" class="form formAjax" data-abide="ajax" action="/subscribe/{{ LANGUAGE_CODE }}/{{ pack.news_slug }}" method="post" novalidate="novalidate">
+                        <div class="small-12 medium-8 large-7 columns unpadded email-field">
+                            <input id="id_email_bebop3" class="buttonField idleField mailSub" type="email" required="" placeholder="email address" maxlength="75" name="email" data-invalid=""></input>
+                            <small class="error">A valid email address is required.</small>
+                        </div>
+                        <div class="small-12 medium-4 large-5 columns unpadded perspective">
+                            <a class="medium button go btn-8 btn-8g ajaxSub" data-mysite="http://example.com">
+                                <span class="front">
+                                    <span class="label hide-for-medium-down hide-for-large">
+                                        Keep me posted 
+                                    </span>
+                                    <em class="icon-typo"> > </em>
+                                </span>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+</div>

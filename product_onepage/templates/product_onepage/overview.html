@@ -1,0 +1,21 @@
+{% load product_tags %}
+
+{% with overview.badges.all|length as size %}
+<div id="{{ overview.htmlid }}">
+    <div id="badges-overview" style="background-color: #000">
+        <div id="icons-overview">
+            <div class="row row-larger">
+                {% for badge in overview.badges.all %}
+                    <div class="columns small-6 medium-4 xlarge-{{ 12|divide:size }} bgIcone flexible" {% if badge.image %} style="background-image:url('/media/{{ badge.image }}'); background-size: initial;" {% endif %}>
+                        {% if badge.text %}
+                            <div>
+                                {{ badge.text|safe }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endwith %}

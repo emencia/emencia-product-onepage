@@ -1,0 +1,20 @@
+<div>
+    <div class="row flexible vertSpace row-spacer row-larger">
+        {% if spec.image and spec.alignment == "right" %}
+            <div class="columns large-5 end">
+                <img class="bg" src="/media/{{ spec.image }}">            
+            </div>
+        {% endif %}
+        <div class="columns large-6 large-offset-1 end">
+            <h2>Specs</h2>
+            <div id="{{ htmlid }}" class="content active">
+                {{ spec.description|safe }}
+            </div>
+        </div>
+        {% if spec.image and spec.alignment == "left" %}
+            <div class="columns large-5 end">
+                <img class="bg" src="/media/{{ spec.image }}">            
+            </div>
+        {% endif %}
+    </div>
+</div>
