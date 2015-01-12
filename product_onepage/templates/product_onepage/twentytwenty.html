@@ -2,30 +2,30 @@
     <div class="row row-larger flexible">
         <div class="columns small-12 large-5 large-offset-1 relatif">
         
-            {% if twenty.left_legend and twenty.right_legend %}
+            {% if object_instance.left_legend and object_instance.right_legend %}
                 <div class="row">
                     <div class="columns small-6">
-                        <p><strong>{{ twenty.left_legend }}</strong></p>
+                        <p><strong>{{ object_instance.left_legend }}</strong></p>
                     </div>
                     <div class="columns small-6 text-right">
-                        <p><strong>{{ twenty.right_legend }}</strong></p>
+                        <p><strong>{{ object_instance.right_legend }}</strong></p>
                     </div>
                 </div>
             {% endif %}
             
-            <div id="{{ twenty.htmlid }}" class="twentytwenty-container">
-                <img src="/media/{{ twenty.left_image }}">
-                <img src="/media/{{ twenty.right_image }}">
+            <div id="{{ object_instance.htmlid }}" class="twentytwenty-container">
+                <img src="/media/{{ object_instance.left_image }}">
+                <img src="/media/{{ object_instance.right_image }}">
             </div>
             
         </div>
         <div class="columns large-4 large-offset-1">
-            {{ twenty.description|safe }}
+            {{ object_instance.description|safe }}
         </div>
     </div>
 </div>
 <script type="text/javascript">
     $(window).load(function() {
-      $("#{{ twenty.htmlid }}").twentytwenty();
+      $("#{{ object_instance.htmlid }}").twentytwenty();
     });
 </script>

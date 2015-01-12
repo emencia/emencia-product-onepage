@@ -1,12 +1,12 @@
 {% load onepage_tags %}
 
-{% with overview.badges.all|length as size %}
-<div id="{{ overview.htmlid }}">
+{% with object_instance.badges.all|length as size %}
+<div id="{{ object_instance.htmlid }}">
     <div id="badges-overview" style="background-color: #000">
         <div id="icons-overview">
         
             <div class="row row-larger">
-                {% for badge in overview.badges.all %}
+                {% for badge in object_instance.badges.all %}
                     <div class="columns small-6 medium-4 xlarge-{{ 12|divide:size }} bgIcone flexible"{% if badge.image %} style="background-image:url('/media/{{ badge.image }}'); background-size: initial;" {% endif %}>
                         {% if badge.text %}<div>{{ badge.text|safe }}</div>{% endif %}
                     </div>

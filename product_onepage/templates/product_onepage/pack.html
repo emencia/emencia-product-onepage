@@ -2,12 +2,12 @@
 <div class="bgBlack">
     <div class="row flexible row-spacer row-larger">
         <div class="columns large-7 large-offset-1 choices-block halo chooseContain">
-            {% for color in pack.colors.all|dictsort:'weighting' %}
-                <img class="choosen-item pack-{{ pack.htmlid }}-{{ forloop.counter }}" src="/media/{{ color.package }}"  {% if forloop.counter == 1 %} style="display:inline-block;" {% endif %}>
+            {% for color in object_instance.colors.all|dictsort:'weighting' %}
+                <img class="choosen-item pack-{{ object_instance.htmlid }}-{{ forloop.counter }}" src="/media/{{ color.package }}"  {% if forloop.counter == 1 %} style="display:inline-block;" {% endif %}>
             {% endfor %}
             <ul class="choices inline-list">
-            {% for color in pack.colors.all|dictsort:'weighting' %}
-                <li class="choice-item {% if color.hexa %} bullet {% endif %} {% if forloop.counter == 1 %} selected {% endif %}" data-showit="pack-{{ pack.htmlid }}-{{ forloop.counter }}" {% if color.hexa %} style="background-color: {{ color.hexa }}" {% endif %}>
+            {% for color in object_instance.colors.all|dictsort:'weighting' %}
+                <li class="choice-item {% if color.hexa %} bullet {% endif %} {% if forloop.counter == 1 %} selected {% endif %}" data-showit="pack-{{ object_instance.htmlid }}-{{ forloop.counter }}" {% if color.hexa %} style="background-color: {{ color.hexa }}" {% endif %}>
                     {% if color.icon %}
                         <img src="/media/{{ color.icon }}">
                     {% endif %}
@@ -17,22 +17,22 @@
         </div>
         <div class="columns large-4 whiteText">
             <div class="text-center">
-                <img src="/media/{{ pack.logo }}">
+                <img src="/media/{{ object_instance.logo }}">
             </div>
-            {{ pack.description|safe }}
+            {{ object_instance.description|safe }}
 
-            {% if pack.shop_availability %}
+            {% if object_instance.shop_availability %}
                 <div class="small-12 vertSpace" style="float:left">
-                    <a class="medium button go" href="{{ pack.shop_url }}">
+                    <a class="medium button go" href="{{ object_instance.shop_url }}">
                         I want it <em class="icon-typo"></em>
                     </a>
                 </div>
             {% endif %}
             
-            {% if pack.news_availability %}
+            {% if object_instance.news_availability %}
                 <div class="inform">
                     <h4 class="hide-for-xlarge-up" style="text-align:left"></h4>
-                    <form id="nlwantit" class="form formAjax" data-abide="ajax" action="/subscribe/{{ LANGUAGE_CODE }}/{{ pack.news_slug }}" method="post" novalidate="novalidate">
+                    <form id="nlwantit" class="form formAjax" data-abide="ajax" action="/subscribe/{{ LANGUAGE_CODE }}/{{ object_instance.news_slug }}" method="post" novalidate="novalidate">
                         <div class="small-12 medium-8 large-7 columns unpadded email-field">
                             <input id="id_email_bebop3" class="buttonField idleField mailSub" type="email" required="" placeholder="email address" maxlength="75" name="email" data-invalid=""></input>
                             <small class="error">A valid email address is required.</small>

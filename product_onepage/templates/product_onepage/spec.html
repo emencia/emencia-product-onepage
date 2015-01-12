@@ -1,19 +1,19 @@
 <div>
     <div class="row flexible vertSpace row-spacer row-larger">
-        {% if spec.image and spec.alignment == "right" %}
+        {% if object_instance.image and object_instance.alignment == "right" %}
             <div class="columns large-5 end">
-                <img class="bg" src="/media/{{ spec.image }}">            
+                <img class="bg" src="/media/{{ object_instance.image }}">            
             </div>
         {% endif %}
         <div class="columns large-6 large-offset-1 end">
             <h2>Specs</h2>
             <div id="{{ htmlid }}" class="content active">
-                {{ spec.description|safe }}
+                {{ object_instance.description|safe }}
             </div>
         </div>
-        {% if spec.image and spec.alignment == "left" %}
+        {% if object_instance.image and object_instance.alignment == "left" %}
             <div class="columns large-5 end">
-                <img class="bg" src="/media/{{ spec.image }}">            
+                <img class="bg" src="/media/{{ object_instance.image }}">            
             </div>
         {% endif %}
     </div>

@@ -22,7 +22,7 @@ class TabPlugin(CMSPluginBase):
     raw_id_fields = ('icons',)
 
     def render(self, context, instance, placeholder):
-        context['tab'] = instance
+        context['object_instance'] = instance
         return context
 
 
@@ -33,7 +33,7 @@ class SpecPlugin(CMSPluginBase):
     render_template = "product_onepage/spec.html"
 
     def render(self, context, instance, placeholder):
-        context['spec'] = instance
+        context['object_instance'] = instance
         return context
 
 
@@ -44,7 +44,7 @@ class BlurbPlugin(CMSPluginBase):
     render_template = "product_onepage/blurb.html"
 
     def render(self, context, instance, placeholder):
-        context['blurb'] = instance
+        context['object_instance'] = instance
         return context
 
 
@@ -56,7 +56,7 @@ class OverviewPlugin(CMSPluginBase):
     raw_id_fields = ('badges',)
 
     def render(self, context, instance, placeholder):
-        context['overview'] = instance
+        context['object_instance'] = instance
         return context
 
 
@@ -68,7 +68,7 @@ class PackagingPlugin(CMSPluginBase):
     raw_id_fields = ('colors',)
 
     def render(self, context, instance, placeholder):
-        context['pack'] = instance
+        context['object_instance'] = instance
         return context
 
 
@@ -79,7 +79,7 @@ class SubscribePlugin(CMSPluginBase):
     render_template = "product_onepage/subscribe.html"
 
     def render(self, context, instance, placeholder):
-        context['subscribe'] = instance
+        context['object_instance'] = instance
         return context
 
 
@@ -91,7 +91,7 @@ class VideoGroupPlugin(CMSPluginBase):
     raw_id_fields = ('files',)
 
     def render(self, context, instance, placeholder):
-        context['video'] = instance
+        context['object_instance'] = instance
         return context
 
 
@@ -102,7 +102,7 @@ class TwentyTwentyPlugin(CMSPluginBase):
     render_template = "product_onepage/twentytwenty.html"
 
     def render(self, context, instance, placeholder):
-        context['twenty'] = instance
+        context['object_instance'] = instance
         return context
 
 

@@ -1,20 +1,20 @@
 {% load onepage_tags %}
-<div id="{{ blurb.htmlid }}" class="row row-fluid bgImg relatif">
-    <img class="bg" src="/media/{{ blurb.background }}">
+<div id="{{ object_instance.htmlid }}" class="row row-fluid bgImg relatif">
+    <img class="bg" src="/media/{{ object_instance.background }}">
     
     <div class="columns small-12 relatif">
     
         <div class="row flexible">
-            <div class="columns large-3 {% if blurb.alignment == 'centered' %} large-centered {% else %} large-offset-{{ blurb.alignment }} {% endif %}">
+            <div class="columns large-3 {% if object_instance.alignment == 'centered' %} large-centered {% else %} large-offset-{{ object_instance.alignment }} {% endif %}">
                 <div class="row">
                 
-                    {% if blurb.logo %}<div class="small-12 columns">
-                            <img class="centered resp-ico" src="/media/{{ blurb.logo }}">
+                    {% if object_instance.logo %}<div class="small-12 columns">
+                            <img class="centered resp-ico" src="/media/{{ object_instance.logo }}">
                     </div>{% endif %}
                     
                     <div class="small-12 columns">
-                        {{ blurb.description|safe }}
-                        {% if blurb.url %}<a href="{{ blurb.url }}" class="button">{{ blurb.button }}</a>{% endif %}
+                        {{ object_instance.description|safe }}
+                        {% if object_instance.url %}<a href="{{ object_instance.url }}" class="button">{{ object_instance.button }}</a>{% endif %}
                     </div>
                     
                 </div>

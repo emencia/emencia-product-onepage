@@ -1,6 +1,6 @@
 /*
  * Main file to build the product_onepage's app CSS file, embed Foundation5
  */
-//@import "foundation";
-
-@import "components/product_onepage";
+/* 
+ * Product One page stylesheet
+ */

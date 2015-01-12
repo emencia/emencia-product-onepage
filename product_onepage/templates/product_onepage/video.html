@@ -1,6 +1,6 @@
 {% load onepage_tags %}
 
-{% with video.files.all|dictsort:'weighting' as files and video.files.all|length as size %}
+{% with object_instance.files.all|dictsort:'weighting' as files and object_instance.files.all|length as size %}
 <div class="section videosproduct lazyvidContain">
     <div class="section chooseContain">
     
@@ -10,7 +10,7 @@
                     <span class="icon-typo ico circle">r</span>
                 </a>
                 <a class="img ytLink fancybox.iframe" target="_blank" href="{{ files.0.url }}">
-                    <img class="rsImg" src="/media/{{ video.background }}" style="width:100%">
+                    <img class="rsImg" src="/media/{{ object_instance.background }}" style="width:100%">
                 </a>            
             </div>        
         </div>
