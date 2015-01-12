@@ -11,11 +11,11 @@ def divide(dividend, divisor):
 
 
 @register.filter(name='get_language')
-def get_language(list, language):
+def get_language(queryset, language):
     try:
-        return list.get(language=language)
+        return queryset.get(language=language)
     except ObjectDoesNotExist:
         try:
-            return list.get(language='en')
+            return queryset.get(language='en')
         except ObjectDoesNotExist:
-            return list.all()[0]
+            return queryset.all()[0]
