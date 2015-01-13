@@ -21,7 +21,7 @@ class AbstractCMS(CMSPlugin):
         )
 
     def modify(self):
-        return '<a href="%s">Click here to modify</a>' % (self.get_admin_url())
+        return _('<a href="%s">Click here to modify</a>') % (self.get_admin_url())
     modify.allow_tags = True
 
     class Meta:
@@ -30,7 +30,7 @@ class AbstractCMS(CMSPlugin):
 
 class AbstractChildModel(models.Model):
     """
-    Abstracted base model for model used as a relation in plugins
+    Abstracted base model for some plugins relations
     """
     admin_name = models.CharField(_(u'Admin Name'), max_length=200)
 
@@ -49,7 +49,9 @@ class AbstractChildModel(models.Model):
 
 
 class Tab(AbstractCMS):
-    """Abstracted Tab Plugin"""
+    """
+    Tab container for content tabs
+    """
     background = models.ImageField(_(u'background'), upload_to='product_onepage', blank=True)
     icons = models.ManyToManyField('TabIcon', verbose_name=_(u'icons'))
     template = models.CharField(_('template'), choices=settings.ONEPAGE_TAB_TEMPLATE_CHOICES, default=ONEPAGE_TAB_DEFAULT_TEMPLATE, max_length=100, blank=False)
@@ -62,7 +64,9 @@ class Tab(AbstractCMS):
 
 
 class TabIcon(AbstractChildModel):
-    """Icon for tab plugin"""
+    """
+    Tab content element
+    """
     title = models.CharField(_(u'Title'), max_length=200)
     text = HTMLField(_(u'Text'), blank=True)
     background = models.ImageField(_(u'background'), upload_to='product_onepage', blank=True)
@@ -75,7 +79,9 @@ class TabIcon(AbstractChildModel):
 
 
 class Spec(AbstractCMS):
-    """Specification Plugin"""
+    """
+    Specifications content
+    """
     ALIGNMENT_CHOICES = settings.ONEPAGE_SPEC_ALIGNMENT_CHOICES
     
     alignment = models.CharField(_(u'Text Alignment'), max_length=20, choices=settings.ONEPAGE_SPEC_ALIGNMENT_CHOICES, default='left')
@@ -88,7 +94,9 @@ class Spec(AbstractCMS):
 
 
 class Blurb(AbstractCMS):
-    """Blurb Plugin"""
+    """
+    Blurb content for some feature/production introduction
+    """
     ALIGNMENT_CHOICES = settings.ONEPAGE_BLURB_ALIGNMENT_CHOICES
     
     background = models.ImageField(_(u'Background'), upload_to='product_onepage')
@@ -105,7 +113,9 @@ class Blurb(AbstractCMS):
 
 
 class Overview(AbstractCMS):
-    """Overview Plugin"""
+    """
+    Overview container for some badges
+    """
     badges = models.ManyToManyField('OverviewBadge', verbose_name=_(u'badges'))
     template = models.CharField(_('template'), choices=settings.ONEPAGE_OVERVIEW_TEMPLATE_CHOICES, default=ONEPAGE_OVERVIEW_DEFAULT_TEMPLATE, max_length=100, blank=False)
 
@@ -117,7 +127,9 @@ class Overview(AbstractCMS):
 
 
 class OverviewBadge(AbstractChildModel):
-    """Badge for Overviews"""
+    """
+    Badge item for Overviews
+    """
     image = models.ImageField(_(u'Image'), upload_to='product_onepage')
     text = HTMLField(_(u'Text'))
     weighting = models.IntegerField(_(u'Weighting'), max_length=10, default=0)
@@ -127,7 +139,9 @@ class OverviewBadge(AbstractChildModel):
 
 
 class AbstractPackaging(AbstractCMS):
-    """Abstracted Packaging Plugin"""
+    """
+    Product packaging
+    """
     colors = models.ManyToManyField('PackagingColor', verbose_name=_(u'colors'))
     logo = models.ImageField(_(u'Logo'), upload_to='product_onepage')
     description = HTMLField(_(u'Description'))
@@ -157,7 +171,9 @@ else:
 
 
 class PackagingColor(AbstractChildModel):
-    """Color for Packaging plugins"""
+    """
+    Color item for Packagings
+    """
     package = models.ImageField(_(u'Package'), upload_to='product_onepage')
     hexa = ColorPickerField(_(u'Hexa'), blank=True)
     icon = models.ImageField(_(u'Icon'), upload_to='product_onepage', blank=True)
@@ -168,7 +184,9 @@ class PackagingColor(AbstractChildModel):
 
 
 class AbstractSubscribe(AbstractCMS):
-    """Abstracted Subscribe Plugin"""
+    """
+    Subscribe element to contain a subscription form
+    """
     message = HTMLField(_(u'Text'))
     template = models.CharField(_('template'), choices=settings.ONEPAGE_SUBSCRIBE_TEMPLATE_CHOICES, default=ONEPAGE_SUBSCRIBE_DEFAULT_TEMPLATE, max_length=100, blank=False)
 
@@ -190,7 +208,9 @@ else:
 
 
 class VideoGroup(AbstractCMS):
-    """Abstracted VideoGroup Plugin"""
+    """
+    Video group container
+    """
     files = models.ManyToManyField('VideoGroupFile', verbose_name=_(u'files'))
     background = models.ImageField(_(u'Background'), upload_to='product_onepage')
     template = models.CharField(_('template'), choices=settings.ONEPAGE_VIDEO_TEMPLATE_CHOICES, default=ONEPAGE_VIDEO_DEFAULT_TEMPLATE, max_length=100, blank=False)
@@ -202,7 +222,9 @@ class VideoGroup(AbstractCMS):
         return 'VideoGroup %s' % (self.title)
 
 class VideoGroupFile(AbstractChildModel):
-    """VideoGroup plugin"""
+    """
+    Video element for VideoGroups
+    """
     title = models.CharField(_(u'Title'), max_length=200)
     url = models.URLField(_(u'URL'), max_length=200)
     image = models.ImageField(_(u'Image'), upload_to='product_onepage', blank=True)
@@ -213,7 +235,10 @@ class VideoGroupFile(AbstractChildModel):
 
 
 class TwentyTwenty(AbstractCMS):
-    """TwentyTwenty Plugin"""
+    """
+    TwentyTwenty content to use the TwentyTwenty library that merge two images 
+    in divided slider to visually compare them
+    """
     left_legend = models.CharField(_(u'Left Legend'), max_length=200, blank=True)
     left_image = models.ImageField(_(u'Left Image'), upload_to='product_onepage')
     right_legend = models.CharField(_(u'Right Legend'), max_length=200, blank=True)
