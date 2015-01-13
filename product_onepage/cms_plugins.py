@@ -16,8 +16,8 @@ from .models import (
 
 class TabPlugin(CMSPluginBase):
     model = Tab
-    module = "Product"
-    name = _(u'Product Tab')
+    module = _("Product Onepage")
+    name = _(u'Tab')
     render_template = settings.ONEPAGE_TAB_DEFAULT_TEMPLATE
     raw_id_fields = ('icons',)
 
@@ -29,8 +29,8 @@ class TabPlugin(CMSPluginBase):
 
 class SpecPlugin(CMSPluginBase):
     model = Spec
-    module = "Product"
-    name = _(u'Product Spec')
+    module = _("Product Onepage")
+    name = _(u'Spec')
     render_template = settings.ONEPAGE_SPEC_DEFAULT_TEMPLATE
 
     def render(self, context, instance, placeholder):
@@ -41,8 +41,8 @@ class SpecPlugin(CMSPluginBase):
 
 class BlurbPlugin(CMSPluginBase):
     model = Blurb
-    module = "Product"
-    name = _(u'Product Blurb')
+    module = _("Product Onepage")
+    name = _(u'Blurb')
     render_template = settings.ONEPAGE_BLURB_DEFAULT_TEMPLATE
 
     def render(self, context, instance, placeholder):
@@ -52,8 +52,8 @@ class BlurbPlugin(CMSPluginBase):
 
 class OverviewPlugin(CMSPluginBase):
     model = Overview
-    module = "Product"
-    name = _(u'Product Overview')
+    module = _("Product Onepage")
+    name = _(u'Overview')
     render_template = settings.ONEPAGE_OVERVIEW_DEFAULT_TEMPLATE
     raw_id_fields = ('badges',)
 
@@ -65,8 +65,8 @@ class OverviewPlugin(CMSPluginBase):
 
 class PackagingPlugin(CMSPluginBase):
     model = Packaging
-    module = "Product"
-    name = _(u'Product Packaging')
+    module = _("Product Onepage")
+    name = _(u'Packaging')
     render_template = settings.ONEPAGE_PACK_DEFAULT_TEMPLATE
     raw_id_fields = ('colors',)
 
@@ -78,8 +78,8 @@ class PackagingPlugin(CMSPluginBase):
 
 class SubscribePlugin(CMSPluginBase):
     model = Subscribe
-    module = "Product"
-    name = _(u'Product Subscribe')
+    module = _("Product Onepage")
+    name = _(u'Subscribe')
     render_template = settings.ONEPAGE_SUBSCRIBE_DEFAULT_TEMPLATE
 
     def render(self, context, instance, placeholder):
@@ -89,8 +89,8 @@ class SubscribePlugin(CMSPluginBase):
 
 class VideoGroupPlugin(CMSPluginBase):
     model = VideoGroup
-    module = "Product"
-    name = _(u'Product Video Group')
+    module = _("Product Onepage")
+    name = _(u'Video Group')
     render_template = settings.ONEPAGE_VIDEO_DEFAULT_TEMPLATE
     raw_id_fields = ('files',)
 
@@ -102,8 +102,8 @@ class VideoGroupPlugin(CMSPluginBase):
 
 class TwentyTwentyPlugin(CMSPluginBase):
     model = TwentyTwenty
-    module = "Product"
-    name = _(u'Product Twenty Twenty')
+    module = _("Product Onepage")
+    name = _(u'Twenty Twenty')
     render_template = settings.ONEPAGE_TWENTYTWENTY_DEFAULT_TEMPLATE
 
     def render(self, context, instance, placeholder):
