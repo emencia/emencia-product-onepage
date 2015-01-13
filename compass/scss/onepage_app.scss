@@ -1,0 +1,20 @@
+/*
+ * Main file to build the product_onepage's app CSS file, embed Foundation5
+ */
+@import "foundation";
+
+$white:#ffffff;
+$black:#000000;
+$blue:#95afcf;
+$green:#74c5c6;
+$orange:#fa883d;
+$cyan:#485dc5;
+$red:#b72416;
+$skyblue:#1659a5;
+$dark:#222;
+$bluegreen:#3fc8c0;
+$highblue:#4fbde5;
+$highgreen:#8cdc74;
+
+@import "components/onepage_contents";
+@import "components/onepage_addons";

@@ -1,20 +1,22 @@
 {% load onepage_tags %}
-<div id="{{ object_instance.htmlid }}" class="row row-fluid bgImg relatif">
+
+{% comment %} "CSS get back" done {% endcomment %}
+<div id="{{ object_instance.htmlid }}" class="row row-fluid bgImg relative">
     <img class="bg" src="/media/{{ object_instance.background }}">
     
-    <div class="columns small-12 relatif">
+    <div class="columns small-12 relative">
     
         <div class="row flexible">
-            <div class="columns large-3 {% if object_instance.alignment == 'centered' %} large-centered {% else %} large-offset-{{ object_instance.alignment }} {% endif %}">
+            <div class="columns large-3{% if object_instance.alignment == 'centered' %} large-centered{% else %} large-offset-{{ object_instance.alignment }}{% endif %}">
                 <div class="row">
                 
-                    {% if object_instance.logo %}<div class="small-12 columns">
-                            <img class="centered resp-ico" src="/media/{{ object_instance.logo }}">
+                    {% if object_instance.logo %}<div class="small-12 columns text-center">
+                            <img class="resp-ico" src="/media/{{ object_instance.logo }}">
                     </div>{% endif %}
                     
                     <div class="small-12 columns">
                         {{ object_instance.description|safe }}
-                        {% if object_instance.url %}<a href="{{ object_instance.url }}" class="button">{{ object_instance.button }}</a>{% endif %}
+                        {% if object_instance.url %}<a href="{{ object_instance.url }}" class="button">{{ object_instance.button }}</a>{% endif %}
                     </div>
                     
                 </div>

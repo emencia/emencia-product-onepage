@@ -18,10 +18,11 @@ class TabPlugin(CMSPluginBase):
     model = Tab
     module = "Product"
     name = _(u'Product Tab')
-    render_template = "product_onepage/tab.html"
+    render_template = settings.ONEPAGE_TAB_DEFAULT_TEMPLATE
     raw_id_fields = ('icons',)
 
     def render(self, context, instance, placeholder):
+        self.render_template = instance.template
         context['object_instance'] = instance
         return context
 
@@ -30,9 +31,10 @@ class SpecPlugin(CMSPluginBase):
     model = Spec
     module = "Product"
     name = _(u'Product Spec')
-    render_template = "product_onepage/spec.html"
+    render_template = settings.ONEPAGE_SPEC_DEFAULT_TEMPLATE
 
     def render(self, context, instance, placeholder):
+        self.render_template = instance.template
         context['object_instance'] = instance
         return context
 
@@ -41,21 +43,22 @@ class BlurbPlugin(CMSPluginBase):
     model = Blurb
     module = "Product"
     name = _(u'Product Blurb')
-    render_template = "product_onepage/blurb.html"
+    render_template = settings.ONEPAGE_BLURB_DEFAULT_TEMPLATE
 
     def render(self, context, instance, placeholder):
+        self.render_template = instance.template
         context['object_instance'] = instance
         return context
-
 
 class OverviewPlugin(CMSPluginBase):
     model = Overview
     module = "Product"
     name = _(u'Product Overview')
-    render_template = "product_onepage/overview.html"
+    render_template = settings.ONEPAGE_OVERVIEW_DEFAULT_TEMPLATE
     raw_id_fields = ('badges',)
 
     def render(self, context, instance, placeholder):
+        self.render_template = instance.template
         context['object_instance'] = instance
         return context
 
@@ -64,10 +67,11 @@ class PackagingPlugin(CMSPluginBase):
     model = Packaging
     module = "Product"
     name = _(u'Product Packaging')
-    render_template = "product_onepage/pack.html"
+    render_template = settings.ONEPAGE_PACK_DEFAULT_TEMPLATE
     raw_id_fields = ('colors',)
 
     def render(self, context, instance, placeholder):
+        self.render_template = instance.template
         context['object_instance'] = instance
         return context
 
@@ -76,21 +80,22 @@ class SubscribePlugin(CMSPluginBase):
     model = Subscribe
     module = "Product"
     name = _(u'Product Subscribe')
-    render_template = "product_onepage/subscribe.html"
+    render_template = settings.ONEPAGE_SUBSCRIBE_DEFAULT_TEMPLATE
 
     def render(self, context, instance, placeholder):
+        self.render_template = instance.template
         context['object_instance'] = instance
         return context
-
 
 class VideoGroupPlugin(CMSPluginBase):
     model = VideoGroup
     module = "Product"
     name = _(u'Product Video Group')
-    render_template = "product_onepage/video.html"
+    render_template = settings.ONEPAGE_VIDEO_DEFAULT_TEMPLATE
     raw_id_fields = ('files',)
 
     def render(self, context, instance, placeholder):
+        self.render_template = instance.template
         context['object_instance'] = instance
         return context
 
@@ -99,9 +104,10 @@ class TwentyTwentyPlugin(CMSPluginBase):
     model = TwentyTwenty
     module = "Product"
     name = _(u'Product Twenty Twenty')
-    render_template = "product_onepage/twentytwenty.html"
+    render_template = settings.ONEPAGE_TWENTYTWENTY_DEFAULT_TEMPLATE
 
     def render(self, context, instance, placeholder):
+        self.render_template = instance.template
         context['object_instance'] = instance
         return context
 

@@ -1,0 +1,59 @@
+/* 
+ * Common addons
+ */
+// Raccourci de positionnement relatif
+.relative-position{
+    position: relative;
+}
+
+// Image en bloc centre
+img.centered{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+// Etire proportionellement l'image a la largeur de son conteneur
+img.expanded{
+    width: 100%;
+    height: auto;
+}
+
+// Fluid row, take the full width but keep normal row and columns behaviors
+.row.row-fluid{
+    width: 100%;
+    max-width: 100%;
+}
+
+// Remove padding on columns
+.columns.unpadded{
+    padding: 0;
+}
+
+// Remove all margins
+.unmarged{
+    margin: 0;
+}
+
+/*
+ * Supplementary divider classes
+ */
+// Apply margin bottom on rows
+.row.divider{
+    margin-bottom: rem-calc(10px);
+    @media #{$medium-up} {
+        margin-bottom: rem-calc(30px);
+    }
+}
+// By default, columns dont needs of a divider in medium display and up, 
+// because they should probably floating
+.columns.divider{
+    margin-bottom: rem-calc(5px);
+    @media #{$medium-up} {
+        margin-bottom: 0;
+    }
+}
+
+// Sometime we need to separate an img from an another adjacent element
+img.divider{
+    margin-bottom: $paragraph-margin-bottom;
+}

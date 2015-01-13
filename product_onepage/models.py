@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.core import urlresolvers
 from cms.models.pluginmodel import CMSPlugin
@@ -5,7 +6,6 @@ from djangocms_text_ckeditor.fields import HTMLField
 from django.utils.translation import ugettext_lazy as _
 
 from paintstore.fields import ColorPickerField
-
 
 class AbstractCMS(CMSPlugin):
     """
@@ -48,22 +48,57 @@ class AbstractChildModel(models.Model):
         abstract = True
 
 
+class Tab(AbstractCMS):
+    """Abstracted Tab Plugin"""
+    background = models.ImageField(_(u'background'), upload_to='product_onepage', blank=True)
+    icons = models.ManyToManyField('TabIcon', verbose_name=_(u'icons'))
+    template = models.CharField(_('template'), choices=settings.ONEPAGE_TAB_TEMPLATE_CHOICES, default=ONEPAGE_TAB_DEFAULT_TEMPLATE, max_length=100, blank=False)
+
+    def copy_relations(self, oldinstance):
+        self.icons = oldinstance.icons.all()
+
+    def __unicode__(self):
+        return 'Tab %s' % (self.title)
+
+
+class TabIcon(AbstractChildModel):
+    """Icon for tab plugin"""
+    title = models.CharField(_(u'Title'), max_length=200)
+    text = HTMLField(_(u'Text'), blank=True)
+    background = models.ImageField(_(u'background'), upload_to='product_onepage', blank=True)
+    passive_image = models.ImageField(_(u'Passive Image'), upload_to='product_onepage')
+    active_image = models.ImageField(_(u'Active Image'), upload_to='product_onepage', blank=True)
+    weighting = models.IntegerField(_(u'Weighting'), max_length=10, default=0)
+
+    def __unicode__(self):
+        return '%s' % (self.admin_name)
+
+
+class Spec(AbstractCMS):
+    """Specification Plugin"""
+    ALIGNMENT_CHOICES = settings.ONEPAGE_SPEC_ALIGNMENT_CHOICES
+    
+    alignment = models.CharField(_(u'Text Alignment'), max_length=20, choices=settings.ONEPAGE_SPEC_ALIGNMENT_CHOICES, default='left')
+    image = models.ImageField(_(u'Image'), upload_to='product_onepage', blank=True)
+    description = HTMLField(_(u'Text'), blank=True)
+    template = models.CharField(_('template'), choices=settings.ONEPAGE_SPEC_TEMPLATE_CHOICES, default=ONEPAGE_SPEC_DEFAULT_TEMPLATE, max_length=100, blank=False)
+
+    def __unicode__(self):
+        return 'Spec %s' % (self.title)
+
+
 class Blurb(AbstractCMS):
     """Blurb Plugin"""
-    ALIGNMENT_CHOICES = (
-        ('1', _(u'Extreme Left')),
-        ('3', _(u'Left')),
-        ('centered', _(u'Center')),
-        ('6', _(u'Right')),
-        ('8', _(u'Extreme Right')),
-    )
+    ALIGNMENT_CHOICES = settings.ONEPAGE_BLURB_ALIGNMENT_CHOICES
+    
     background = models.ImageField(_(u'Background'), upload_to='product_onepage')
     mobile = models.ImageField(_(u'Mobile'), upload_to='product_onepage', blank=True)
     logo = models.ImageField(_(u'Logo'), upload_to='product_onepage', blank=True)
     description = HTMLField(_(u'Text'))
     button = models.CharField(_(u'Button'), max_length=200, blank=True)
     url = models.URLField(_(u'URL'), max_length=200, blank=True)
-    alignment = models.CharField(_(u'Text Alignment'), max_length=20, choices=ALIGNMENT_CHOICES, default='centered')
+    alignment = models.CharField(_(u'Text Alignment'), max_length=20, choices=settings.ONEPAGE_BLURB_ALIGNMENT_CHOICES, default='centered')
+    template = models.CharField(_('template'), choices=settings.ONEPAGE_BLURB_TEMPLATE_CHOICES, default=ONEPAGE_BLURB_DEFAULT_TEMPLATE, max_length=100, blank=False)
 
     def __unicode__(self):
         return 'Blurb %s' % (self.title)
@@ -72,6 +107,7 @@ class Blurb(AbstractCMS):
 class Overview(AbstractCMS):
     """Overview Plugin"""
     badges = models.ManyToManyField('OverviewBadge', verbose_name=_(u'badges'))
+    template = models.CharField(_('template'), choices=settings.ONEPAGE_OVERVIEW_TEMPLATE_CHOICES, default=ONEPAGE_OVERVIEW_DEFAULT_TEMPLATE, max_length=100, blank=False)
 
     def copy_relations(self, oldinstance):
         self.badges = oldinstance.badges.all()
@@ -98,6 +134,7 @@ class AbstractPackaging(AbstractCMS):
     shop_url = models.URLField(_(u'Shop URL'), max_length=200, blank=True)
     shop_availability = models.BooleanField(_(u'Has shop'))
     news_availability = models.BooleanField(_(u'Has News'))
+    template = models.CharField(_('template'), choices=settings.ONEPAGE_PACK_TEMPLATE_CHOICES, default=ONEPAGE_PACK_DEFAULT_TEMPLATE, max_length=100, blank=False)
 
     def __unicode__(self):
         return 'Packaging %s' % (self.title)
@@ -130,49 +167,33 @@ class PackagingColor(AbstractChildModel):
         return '%s' % (self.admin_name)
 
 
-class Spec(AbstractCMS):
-    """Specification Plugin"""
-    ALIGNMENT_CHOICES = (
-        ('left', _(u'Left')),
-        ('right', _(u'Right')),
-    )
-    alignment = models.CharField(_(u'Text Alignment'), max_length=20, choices=ALIGNMENT_CHOICES, default='left')
-    image = models.ImageField(_(u'Image'), upload_to='product_onepage', blank=True)
-    description = HTMLField(_(u'Text'), blank=True)
+class AbstractSubscribe(AbstractCMS):
+    """Abstracted Subscribe Plugin"""
+    message = HTMLField(_(u'Text'))
+    template = models.CharField(_('template'), choices=settings.ONEPAGE_SUBSCRIBE_TEMPLATE_CHOICES, default=ONEPAGE_SUBSCRIBE_DEFAULT_TEMPLATE, max_length=100, blank=False)
 
     def __unicode__(self):
-        return 'Spec %s' % (self.title)
+        return 'Subscribe %s' % (self.title)
 
+    class Meta:
+        abstract = True
 
-class Tab(AbstractCMS):
-    """Abstracted Tab Plugin"""
-    background = models.ImageField(_(u'background'), upload_to='product_onepage', blank=True)
-    icons = models.ManyToManyField('TabIcon', verbose_name=_(u'icons'))
-
-    def copy_relations(self, oldinstance):
-        self.icons = oldinstance.icons.all()
-
-    def __unicode__(self):
-        return 'Tab %s' % (self.title)
-
-
-class TabIcon(AbstractChildModel):
-    """Icon for tab plugin"""
-    title = models.CharField(_(u'Title'), max_length=200)
-    text = HTMLField(_(u'Text'), blank=True)
-    background = models.ImageField(_(u'background'), upload_to='product_onepage', blank=True)
-    passive_image = models.ImageField(_(u'Passive Image'), upload_to='product_onepage')
-    active_image = models.ImageField(_(u'Active Image'), upload_to='product_onepage', blank=True)
-    weighting = models.IntegerField(_(u'Weighting'), max_length=10, default=0)
-
-    def __unicode__(self):
-        return '%s' % (self.admin_name)
+# Subscribe plugin fields is conditionnated to the mcrm app
+try:
+    from project.mcrm.models import Category
+except ImportError:
+    class Subscribe(AbstractSubscribe):
+        subscribe_to = models.CharField(_(u'Subscribe to'), max_length=50, blank=True)
+else:
+    class Subscribe(AbstractSubscribe):
+        subscribe_to = models.ForeignKey(Category, blank=True)
 
 
 class VideoGroup(AbstractCMS):
     """Abstracted VideoGroup Plugin"""
     files = models.ManyToManyField('VideoGroupFile', verbose_name=_(u'files'))
     background = models.ImageField(_(u'Background'), upload_to='product_onepage')
+    template = models.CharField(_('template'), choices=settings.ONEPAGE_VIDEO_TEMPLATE_CHOICES, default=ONEPAGE_VIDEO_DEFAULT_TEMPLATE, max_length=100, blank=False)
 
     def copy_relations(self, oldinstance):
         self.files = oldinstance.files.all()
@@ -198,27 +219,7 @@ class TwentyTwenty(AbstractCMS):
     right_legend = models.CharField(_(u'Right Legend'), max_length=200, blank=True)
     right_image = models.ImageField(_(u'Right Image'), upload_to='product_onepage')
     description = HTMLField(_(u'Text'))
+    template = models.CharField(_('template'), choices=settings.ONEPAGE_TWENTYTWENTY_TEMPLATE_CHOICES, default=ONEPAGE_TWENTYTWENTY_DEFAULT_TEMPLATE, max_length=100, blank=False)
 
     def __unicode__(self):
         return 'TwentyTwenty %s' % (self.title)
-
-
-class AbstractSubscribe(AbstractCMS):
-    """Abstracted Subscribe Plugin"""
-    message = HTMLField(_(u'Text'))
-
-    def __unicode__(self):
-        return 'Subscribe %s' % (self.title)
-
-    class Meta:
-        abstract = True
-
-# Subscribe plugin fields is conditionnated to the mcrm app
-try:
-    from project.mcrm.models import Category
-except ImportError:
-    class Subscribe(AbstractSubscribe):
-        subscribe_to = models.CharField(_(u'Subscribe to'), max_length=50, blank=True)
-else:
-    class Subscribe(AbstractSubscribe):
-        subscribe_to = models.ForeignKey(Category, blank=True)
